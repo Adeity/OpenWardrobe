@@ -63,6 +63,10 @@ class HomeScreen extends StatelessWidget {
         onPressed: () => context.go('/wardrobe'),
         child: const Icon(Icons.add),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.go('/wardrobe'),
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
