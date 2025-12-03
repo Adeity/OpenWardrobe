@@ -17,10 +17,33 @@ Future<void> main() async {
 
   // Initialize Supabase
   await Supabase.initialize(
-    url: "https://openwdsupdemo.sug.lol",
-    anonKey: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzdXBhYmFzZSIsImlhdCI6MTczODg5ODA0MCwiZXhwIjo0ODk0NTcxNjQwLCJyb2xlIjoiYW5vbiJ9.bv0LuM7PP9JxKSrI7XTzw_I2IS7-86L8iqIkHiN-aQI",
-    debug: true,
+    url: const String.fromEnvironment('SUPABASE_URL'),
+    anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
   );
+
+  final envFile = File('.env');
+  final configFile = File('web/config.json');
+
+  if (!await envFile.exists()) {
+    print('Error: .env file not found.');
+    return;
+  }
+
+  final lines = await envFile.readAsLines();
+  final config = <String, String>{};
+
+  for (var line in lines) {
+    // Simple parser for KEY=VALUE
+    if (line.isNotEmpty && !line.startsWith('#') && line.contains('=')) {
+      final parts = line.split('=');
+      final key = parts[0].trim();
+      final value = parts.sublist(1).join('=').trim(); // Rejoin in case value has =
+      config[key] = value;
+    }
+  }
+
+  await configFile.writeAsString(jsonEncode(config));
+  print('✅ web/config.json generated from .env');
 
 
    Hive.registerAdapter(WardrobeItemAdapter());
