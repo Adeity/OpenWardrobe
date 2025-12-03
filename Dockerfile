@@ -17,7 +17,7 @@ COPY . .
 RUN flutter pub get
 
 # Build Flutter Web
-RUN flutter build web --release
+RUN flutter build web --release --verbose
 
 # Use Nginx as a lightweight web server
 FROM nginx:alpine
