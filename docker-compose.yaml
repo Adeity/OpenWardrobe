@@ -1,10 +1,20 @@
+version: '3.8'
+
 services:
   app:
+    # 1. Tell Dokploy to build using your Dockerfile
     build:
       context: .
       dockerfile: Dockerfile
+      # 2. THIS IS THE BRIDGE:
+      # Map the Environment Variables (from Dokploy UI) to Build Args (for Dockerfile)
+      args:
+        SUPABASE_URL: ${SUPABASE_URL}
+        SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+    
+    # 3. Map the port
     ports:
-      - "8080:80"
-    depends_on:
-      - db 
-    restart: unless-stopped 
+      - "80:80"
+    
+    # 4. Standard restart policy
+    restart: always
