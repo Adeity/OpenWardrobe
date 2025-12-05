@@ -1,39 +1,36 @@
+# --- Stage 1: Build (Same as before) ---
 FROM dart:stable AS build
-
-# Set working directory inside the container
 WORKDIR /app
-
-# Install Flutter manually
 RUN git clone https://github.com/flutter/flutter.git -b stable /flutter
 ENV PATH="/flutter/bin:$PATH"
-
-# Verify Flutter installation
-RUN flutter channel stable
-RUN flutter upgrade
-
-RUN flutter --version
 RUN flutter config --enable-web
+COPY . .
+RUN flutter pub get
 
 ARG SUPABASE_URL
 ARG SUPABASE_ANON_KEY
 
-# Copy project files
-COPY . .
-
-# Get dependencies
-RUN flutter pub get
-
-# Build Flutter Web
-RUN flutter build web --release --verbose \
+RUN flutter build web --release \
     --dart-define=SUPABASE_URL=$SUPABASE_URL \
     --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
 
-# Use Nginx as a lightweight web server
-FROM nginx:alpine
-# Copy built Flutter Web files to Nginx's HTML directory
-COPY --from=build /app/build/web /usr/share/nginx/html
+# --- Stage 2: Run (The Magic Part) ---
+FROM alpine:latest
 
-# Expose port 80
-EXPOSE 80
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Create a user to run securely (optional but good practice)
+RUN adduser -D static
+USER static
+WORKDIR /home/static
+
+# Copy built files
+COPY --from=build /app/build/web ./html
+
+# Expose port 3000
+EXPOSE 3000
+
+# Run Alpine's built-in HTTP server
+# -f: Don't detach (run in foreground)
+# -v: Verbose (show logs)
+# -p: Port
+# -h: Home directory for files
+CMD ["httpd", "-f", "-v", "-p", "3000", "-h", "/home/static/html"]
