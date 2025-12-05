@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
 
 
 
-    Future<void> _signOut() async {
+    Future<void> signOut() async {
       await supabase.auth.signOut();
       if (context.mounted) context.go('/');
     }
@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
         actions: [
-          IconButton(icon: const Icon(Icons.logout), onPressed: _signOut),
+          IconButton(icon: const Icon(Icons.logout), onPressed: signOut),
         ],
       ),
       body: Center(
