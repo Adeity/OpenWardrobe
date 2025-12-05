@@ -12,6 +12,9 @@ services:
         SUPABASE_URL: ${SUPABASE_URL}
         SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
     
+    # 3. Map the port
+    ports:
+      - "8088:80"
     
     # 4. Standard restart policy
     restart: always
