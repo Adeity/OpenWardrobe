@@ -26,7 +26,7 @@ WORKDIR /home/static
 COPY --from=build /app/build/web ./html
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 3100
 
 # Run Alpine's built-in HTTP server
 # -f: Don't detach (run in foreground)
