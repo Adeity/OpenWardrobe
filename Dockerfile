@@ -11,8 +11,8 @@ ENV PATH="/flutter/bin:$PATH"
 RUN flutter --version
 RUN flutter config --enable-web
 
-ADD SUPABASE_URL
-ADD SUPABASE_ANON_KEY
+ARG SUPABASE_URL
+ARG SUPABASE_ANON_KEY
 
 # Copy project files
 COPY . .
