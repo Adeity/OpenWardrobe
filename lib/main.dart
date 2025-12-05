@@ -17,9 +17,17 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   // Initialize Supabase
+  final supabaseUrl = const String.fromEnvironment('SUPABASE_URL');
+  final supabaseAnonKey = const String.fromEnvironment('SUPABASE_ANON_KEY');
+
+  // --- TEMPORARY DEBUG PRINT ---
+  print('URL CHECK: $supabaseUrl');
+  print('KEY CHECK: $supabaseAnonKey');
+  // -----------------------------
+
   await Supabase.initialize(
-    url: const String.fromEnvironment('SUPABASE_URL'),
-    anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
+    url: supabaseUrl,
+    anonKey: supabaseAnonKey,
   );
 
   Hive.registerAdapter(WardrobeItemAdapter());
