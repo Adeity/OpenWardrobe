@@ -9,7 +9,7 @@ services:
       # 2. THIS IS THE BRIDGE:
       # Map the Environment Variables (from Dokploy UI) to Build Args (for Dockerfile)
       args:
-        SUPABASE_URL: '/supaset'
+        SUPABASE_URL: ${SUPABASE_URL}
         SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
     
     # 3. Map the port
