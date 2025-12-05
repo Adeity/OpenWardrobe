@@ -11,11 +11,14 @@ import 'models/item_category.dart';
 
 
 Future<void> main() async {
+  print('before ensureInitialized');
   WidgetsFlutterBinding.ensureInitialized();
 
+  print('before intiFlutter');
   // Initialize Hive for local storage
   await Hive.initFlutter();
 
+  print('Before getting the envs');
   // Initialize Supabase
   final supabaseUrl = const String.fromEnvironment('SUPABASE_URL');
   final supabaseAnonKey = const String.fromEnvironment('SUPABASE_ANON_KEY');
