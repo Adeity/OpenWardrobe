@@ -3,11 +3,17 @@ FROM dart:stable AS build
 # Set working directory inside the container
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y curl git wget unzip libgconf-2-4 gdb lcov libstdc++6 libglu1-mesa fonts-droid-fallback lib32stdc++6 python3
+RUN apt-get clean
+
 # Install Flutter manually
 RUN git clone https://github.com/flutter/flutter.git -b stable /flutter
 ENV PATH="/flutter/bin:$PATH"
 
 # Verify Flutter installation
+RUN flutter channel stable
+RUN flutter upgrade
+
 RUN flutter --version
 RUN flutter config --enable-web
 
