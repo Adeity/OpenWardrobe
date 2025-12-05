@@ -14,7 +14,7 @@ services:
     
     # 3. Map the port
     ports:
-      - "80:80"
+      - "8073:80"
     
     # 4. Standard restart policy
     restart: always
