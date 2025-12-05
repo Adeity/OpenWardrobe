@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -24,32 +22,7 @@ Future<void> main() async {
     anonKey: const String.fromEnvironment('SUPABASE_ANON_KEY'),
   );
 
-  final envFile = File('.env');
-  final configFile = File('web/config.json');
-
-  if (!await envFile.exists()) {
-    print('Error: .env file not found.');
-    return;
-  }
-
-  final lines = await envFile.readAsLines();
-  final config = <String, String>{};
-
-  for (var line in lines) {
-    // Simple parser for KEY=VALUE
-    if (line.isNotEmpty && !line.startsWith('#') && line.contains('=')) {
-      final parts = line.split('=');
-      final key = parts[0].trim();
-      final value = parts.sublist(1).join('=').trim(); // Rejoin in case value has =
-      config[key] = value;
-    }
-  }
-
-  await configFile.writeAsString(jsonEncode(config));
-  print('✅ web/config.json generated from .env');
-
-
-   Hive.registerAdapter(WardrobeItemAdapter());
+  Hive.registerAdapter(WardrobeItemAdapter());
   Hive.registerAdapter(OutfitAdapter());
   Hive.registerAdapter(BrandAdapter());
   Hive.registerAdapter(ItemCategoryAdapter());

@@ -9,6 +9,10 @@ ENV PATH="/flutter/bin:$PATH"
 
 # Verify Flutter installation
 RUN flutter --version
+RUN flutter config --enable-web
+
+ADD SUPABASE_URL
+ADD SUPABASE_ANON_KEY
 
 # Copy project files
 COPY . .
@@ -17,16 +21,16 @@ COPY . .
 RUN flutter pub get
 
 # Build Flutter Web
-RUN flutter build web --release --verbose
+RUN flutter build web --release --verbose \
+    --dart-define=SUPABASE_URL=$SUPABASE_URL \
+    --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
 
 # Use Nginx as a lightweight web server
 FROM nginx:alpine
-
 # Copy built Flutter Web files to Nginx's HTML directory
 COPY --from=build /app/build/web /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
-
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
