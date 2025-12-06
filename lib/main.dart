@@ -22,7 +22,7 @@ Future<void> main() async {
   // Initialize Supabase
   // final supabaseUrl = "http://wardrobe-supabase-915d3j-65d190-130-61-239-90.traefik.me";
   final supabaseUrl = "/supabase";
-  final supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjQ3NzA2OTYsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.unZYiPr0Ya77f92P2iPYchPFHbLw19lET7F5OE3rsyc";
+  final supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NjQ5NDgxMDIsImV4cCI6MTg5MzQ1NjAwMCwicm9sZSI6ImFub24iLCJpc3MiOiJzdXBhYmFzZSJ9.XVEPIDlupJL7Uk_j3L7aokAEt6q9g2DH9nyewfcyS90";
 
   // --- TEMPORARY DEBUG PRINT ---
   print('URL CHECK: $supabaseUrl');
